@@ -1,0 +1,25 @@
+﻿@model XlationASP.ViewModels.BookViewModel
+
+@{
+    ViewData["Title"] = "Books";
+}
+<h1>@ViewData["Title"]</h1>
+<hr/>
+@if(Model.SelectedBook != null)
+{
+    <h2>@Model.SelectedBook.Title</h2>
+    <p>The ID of the book = @Model.SelectedBook.Id.</p>
+}
+else if(Model.Books != null)
+{
+    <ul>
+    @foreach(var book in Model.Books) 
+    {
+        <li>@book.Id - @book.Title</li>
+    }
+    </ul>
+}
+else 
+{
+    <p>No book found.</p>
+}

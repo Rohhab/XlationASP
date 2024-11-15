@@ -1,0 +1,33 @@
+﻿@model XlationASP.ViewModels.XlatorViewModel
+
+@{
+    ViewData["Title"] = "Xlators";
+}
+<h1>@ViewData["Title"]</h1>
+<hr/>
+@if(Model.Xlators != null)
+{
+    <table class=“table table-­bordered table-hover”>
+        <th>
+            <td>ID</td>
+            <td>Name</td>
+        </th>
+        @foreach(var xlator in Model.Xlators)
+        {
+            <tr>
+                <td>@xlator.Id</td>
+                <td>@Html.ActionLink($"{@xlator.Name}", $"{xlator.Id}", "Xlators")</td>
+            </tr>
+        }
+    </table>
+    <hr/>
+}
+else if(Model.SelectedXlator != null)
+{
+    <h2>@Model.SelectedXlator.Name</h2>
+    <p>The ID of the xlator = @Model.SelectedXlator.Id.</p>
+}
+else
+{
+    <p>No such person is found.</p>
+}
