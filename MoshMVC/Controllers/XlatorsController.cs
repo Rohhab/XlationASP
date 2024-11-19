@@ -4,32 +4,36 @@ using XlationASP.ViewModels;
 
 namespace XlationASP.Controllers
 {
-    [Route("xlators")]
     public class XlatorsController : Controller
     {
-        private static readonly List<Xlator> XlatorList = new List<Xlator>
-        {
+        private static readonly List<Xlator> XlatorList =
+        [
             new Xlator() {Id = 1, Name = "Pouria"},
             new Xlator() {Id = 2, Name = "Zahra"},
             new Xlator() {Id = 3, Name = "Jafar"}
-        };
+        ];
 
+        [Route("xlators")]
         [HttpGet]
         public IActionResult Xlators()
         {
             var model = new XlatorViewModel { Xlators = XlatorList };
+
             return View(model);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Details(int id)
+        [Route("xlators/details/{id?}")]
+        [HttpGet]
+        public IActionResult Details(int? id, int? queryId)
         {
+            var effectiveId = id ?? queryId;
+
             var model = new XlatorViewModel
             {
-                SelectedXlator = XlatorList.Find(x => x.Id == id)
+                SelectedXlator = XlatorList.Find(x => x.Id == effectiveId)
             };
 
-            if (model == null)
+            if (model.SelectedXlator == null)
                 return NotFound();
 
             return View("Xlators", model);
