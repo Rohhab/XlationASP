@@ -5,21 +5,41 @@
 }
 <h1>@ViewData["Title"]</h1>
 <hr/>
+
 @if(Model.SelectedBook != null)
 {
     <h2>@Model.SelectedBook.Title</h2>
     <p>The ID of the book = @Model.SelectedBook.Id.</p>
 }
-else if(Model.Books != null)
+else if(Model.Books == null || !Model.Books.Any())
 {
-    <ul>
-    @foreach(var book in Model.Books) 
-    {
-        <li>@book.Id - @book.Title</li>
-    }
-    </ul>
+    <p>No book submitted yet.</p>
 }
 else 
 {
-    <p>No book found.</p>
+    <table class="table table-­bordered table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var book in Model.Books)
+                {
+                    <tr>
+                        <td>@book.Id</td>
+                        <td>@Html.ActionLink(
+                            linkText: $"{book.Title}",
+                            actionName: "Details",
+                            controllerName: "Books",
+                            routeValues: new { id = book.Id },
+                            htmlAttributes: null
+                        )
+                        </td>
+                    </tr>
+                }
+        </tbody>
+    </table>
+    <hr />
 }

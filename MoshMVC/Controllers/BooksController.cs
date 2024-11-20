@@ -4,16 +4,16 @@ using XlationASP.ViewModels;
 
 namespace XlationASP.Controllers
 {
-    [Route("books")]
     public class BooksController : Controller
     {
-        private static readonly List<Book> BookList = new List<Book>
-        {
+        private static readonly List<Book> BookList =
+        [
             new Book {Id = 1, Title = "Chernobyl"},
             new Book {Id = 2, Title = "Fourcade"},
             new Book {Id = 3 , Title = "Engineering"}
-        };
+        ];
 
+        [Route("books")]
         [HttpGet]
         public IActionResult Books()
         {
@@ -25,15 +25,18 @@ namespace XlationASP.Controllers
             return View(model);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Details(int id)
+        [Route("books/details/{id?}")]
+        [HttpGet]
+        public IActionResult Details(int? id, int? queryId)
         {
+            var effectiveId = id ?? queryId;
+
             var model = new BookViewModel
             {
-                SelectedBook = BookList.Find(b => b.Id == id)
+                SelectedBook = BookList.Find(b => b.Id == effectiveId)
             };
 
-            if (model == null)
+            if (model.SelectedBook == null)
                 return NotFound();
 
             return View("Books", model);
