@@ -8,6 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+var domainConnectionString = builder.Configuration.GetConnectionString("DomainDatabase") ?? throw new InvalidOperationException("Connection string 'DomainDatabase' not found.");
+builder.Services.AddDbContext<DomainDbContext>(options =>
+    options.UseSqlServer(domainConnectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
