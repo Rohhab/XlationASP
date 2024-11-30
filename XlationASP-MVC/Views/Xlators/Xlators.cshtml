@@ -5,42 +5,42 @@
 }
 <h1>@ViewData["Title"]</h1>
 <hr/>
+
 @if(Model.SelectedXlator != null)
 {
-<h2>@Model.SelectedXlator.Name</h2>
-<p>The ID of the xlator = @Model.SelectedXlator.Id.</p>
-}
-else if(Model.Xlators == null || !Model.Xlators.Any())
-{
-    <p>No Xlators joined yet.</p>
-}
-else
-{
-    <table class="table table-­bordered table-hover">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-            </tr>
-        </thead>
+    <h2>@Model.SelectedXlator.Name</h2> 
+    <p>The ID of the xlator = @Model.SelectedXlator.Id.</p> 
+} 
+else if(Model.Xlators == null || !Model.Xlators.Any()) 
+{ 
+    <p>No Xlators joined yet.</p> 
+} 
+else 
+{ 
+    <table class="table table-­bordered table-hover"> 
+        <thead> 
+            <tr> 
+                <th>ID</th> 
+                <th>Name</th> 
+            </tr> 
+        </thead> 
 
-        <tbody>
-            @foreach (var xlator in Model.Xlators)
-            {
-                <tr>
-                    <td>@xlator.Id</td>
-                    <td>
-                        @Html.ActionLink(
-                                 linkText: $"{@xlator.Name}",
-                                 actionName: "Details",
-                                 controllerName: "Xlators",
-                                 routeValues: new { id = xlator.Id },
-                                 htmlAttributes: null
-                                 )
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <hr />
+        <tbody> 
+            @foreach (var xlator in Model.Xlators) 
+            { 
+                <tr> 
+                    <td>@xlator.Id</td> 
+                    <td> 
+                        @Html.ActionLink( 
+                        linkText: $"{@xlator.Name}", 
+                        actionName: "Details", 
+                        controllerName: "Xlators", 
+                        routeValues: new { id = xlator.Id }, 
+                        htmlAttributes: null 
+                        ) 
+                    </td> 
+                </tr> 
+            } 
+        </tbody> 
+    </table> 
 }

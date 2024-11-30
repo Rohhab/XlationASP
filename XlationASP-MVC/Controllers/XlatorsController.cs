@@ -1,23 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using XlationASP.Models;
+using XlationASP.Data;
 using XlationASP.ViewModels;
 
 namespace XlationASP.Controllers
 {
     public class XlatorsController : Controller
     {
-        private static readonly List<Xlator> XlatorList =
-        [
-            new Xlator() {Id = 1, Name = "Pouria"},
-            new Xlator() {Id = 2, Name = "Zahra"},
-            new Xlator() {Id = 3, Name = "Jafar"}
-        ];
+        private readonly DomainDbContext _context;
+        public XlatorsController(DomainDbContext context)
+        {
+            _context = context;
+        }
 
         [Route("xlators")]
         [HttpGet]
         public IActionResult Xlators()
         {
-            var model = new XlatorViewModel { Xlators = XlatorList };
+            var model = new XlatorViewModel
+            {
+                Xlators = _context.Xlators.ToList()
+            };
 
             return View(model);
         }
@@ -30,10 +32,10 @@ namespace XlationASP.Controllers
 
             var model = new XlatorViewModel
             {
-                SelectedXlator = XlatorList.Find(x => x.Id == effectiveId)
+                SelectedXlator = _context.Xlators.SingleOrDefault(x => x.Id == effectiveId)
             };
 
-            if (model.SelectedXlator == null)
+            if (model == null)
                 return NotFound();
 
             return View("Xlators", model);
