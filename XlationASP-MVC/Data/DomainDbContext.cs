@@ -11,5 +11,6 @@ namespace XlationASP.Data
         }
 
         public DbSet<Xlator> Xlators { get; set; } = null!;
+        public DbSet<Book> Books { get; set; } = null!;
     }
 }

@@ -1,4 +1,4 @@
-﻿@model XlationASP.ViewModels.XlatorViewModel
+﻿@model IEnumerable<XlationASP.Models.Xlator>
 
 @{
     ViewData["Title"] = "Xlators";
@@ -6,12 +6,7 @@
 <h1>@ViewData["Title"]</h1>
 <hr/>
 
-@if(Model.SelectedXlator != null)
-{
-    <h2>@Model.SelectedXlator.Name</h2> 
-    <p>The ID of the xlator = @Model.SelectedXlator.Id.</p> 
-} 
-else if(Model.Xlators == null || !Model.Xlators.Any()) 
+@if(Model == null || !Model.Any()) 
 { 
     <p>No Xlators joined yet.</p> 
 } 
@@ -21,12 +16,13 @@ else
         <thead> 
             <tr> 
                 <th>ID</th> 
-                <th>Name</th> 
+                <th>Name</th>
+                <th>Membership Type</th>
             </tr> 
         </thead> 
 
         <tbody> 
-            @foreach (var xlator in Model.Xlators) 
+            @foreach (var xlator in Model) 
             { 
                 <tr> 
                     <td>@xlator.Id</td> 
@@ -39,6 +35,7 @@ else
                         htmlAttributes: null 
                         ) 
                     </td> 
+                    <td>@xlator.MembershipType.Name</td> 
                 </tr> 
             } 
         </tbody> 

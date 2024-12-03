@@ -1,0 +1,22 @@
+﻿@model XlationASP.Models.Book
+
+@{
+    ViewData["Title"] = "Books";
+}
+<h1>@ViewData["Title"]</h1>
+<hr />
+
+@if(Model == null)
+{
+    <h2>No book found with the specified ID.</h2>
+}
+else
+{
+    <h2>@Model.Title</h2>
+    <ul>
+        <li>Genre: @Model.Genre</li>
+        <li>Publish date: @Model.PublishDate.ToString("dddd, MMMM d, yyyy")</li>
+        <li>Date added: @Model.DateAdded.ToString("dddd, MMMM d, yyyy")</li>
+        <li>No. of pages: @Model.NoOfPages</li>
+    </ul>
+}

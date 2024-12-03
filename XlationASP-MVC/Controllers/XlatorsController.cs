@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using XlationASP.Data;
-using XlationASP.ViewModels;
 
 namespace XlationASP.Controllers
 {
@@ -12,14 +12,10 @@ namespace XlationASP.Controllers
             _context = context;
         }
 
-        [Route("xlators")]
         [HttpGet]
-        public IActionResult Xlators()
+        public IActionResult Index()
         {
-            var model = new XlatorViewModel
-            {
-                Xlators = _context.Xlators.ToList()
-            };
+            var model = _context.Xlators.Include(x => x.MembershipType).ToList();
 
             return View(model);
         }
@@ -30,15 +26,12 @@ namespace XlationASP.Controllers
         {
             var effectiveId = id ?? queryId;
 
-            var model = new XlatorViewModel
-            {
-                SelectedXlator = _context.Xlators.SingleOrDefault(x => x.Id == effectiveId)
-            };
+            var model = _context.Xlators.Include(x => x.MembershipType).SingleOrDefault(x => x.Id == effectiveId);
 
             if (model == null)
                 return NotFound();
 
-            return View("Xlators", model);
+            return View(model);
         }
     }
 }
