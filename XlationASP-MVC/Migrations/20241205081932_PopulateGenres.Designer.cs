@@ -12,8 +12,8 @@ using XlationASP.Data;
 namespace XlationASP.Migrations
 {
     [DbContext(typeof(DomainDbContext))]
-    [Migration("20241203180319_AddBooksTable")]
-    partial class AddBooksTable
+    [Migration("20241205081932_PopulateGenres")]
+    partial class PopulateGenres
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,9 +33,8 @@ namespace XlationASP.Migrations
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Genre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte>("GenreId")
+                        .HasColumnType("tinyint");
 
                     b.Property<int>("NoOfPages")
                         .HasColumnType("int");
@@ -45,11 +44,29 @@ namespace XlationASP.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GenreId");
+
                     b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("XlationASP.Models.Genre", b =>
+                {
+                    b.Property<byte>("Id")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genre");
                 });
 
             modelBuilder.Entity("XlationASP.Models.MembershipType", b =>
@@ -102,6 +119,17 @@ namespace XlationASP.Migrations
                     b.HasIndex("MembershipTypeId");
 
                     b.ToTable("Xlators");
+                });
+
+            modelBuilder.Entity("XlationASP.Models.Book", b =>
+                {
+                    b.HasOne("XlationASP.Models.Genre", "Genre")
+                        .WithMany()
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("XlationASP.Models.Xlator", b =>

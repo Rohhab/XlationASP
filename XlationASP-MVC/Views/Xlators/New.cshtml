@@ -1,0 +1,33 @@
+﻿@model XlationASP.ViewModels.NewXlatorViewModel
+@{
+    ViewData["Title"] = "New Xlator";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@using(Html.BeginForm("Create", "Xlators"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Xlator.Name)
+        @Html.TextBoxFor(m => m.Xlator.Name, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Xlator.Birthdate)
+        @Html.TextBoxFor(m => m.Xlator.Birthdate, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Xlator.MembershipTypeId)
+        @Html.DropDownListFor(m => m.Xlator.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select Membership Type" ,new { @class = "form-control" })
+    </div>
+
+    <div class="form-check">
+        @Html.CheckBoxFor(m => m.Xlator.IsSubscribedToNewsLetter, new { @class = "form-check-input" } )
+        <label class="form-check-label" for="IsSubscribedToNewsLetter">
+        Is Subscribed?
+        </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+}

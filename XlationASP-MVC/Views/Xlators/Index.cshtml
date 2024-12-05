@@ -6,6 +6,14 @@
 <h1>@ViewData["Title"]</h1>
 <hr/>
 
+@Html.ActionLink(
+    linkText: "Add",
+    actionName: "New",
+    controllerName: "Xlators",
+    routeValues: null,
+    htmlAttributes: new { @class = "btn btn-primary" }
+)
+
 @if(Model == null || !Model.Any()) 
 { 
     <p>No Xlators joined yet.</p> 

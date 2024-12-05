@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using XlationASP.Data;
+using XlationASP.Models;
+using XlationASP.ViewModels;
 
 namespace XlationASP.Controllers
 {
@@ -32,6 +34,23 @@ namespace XlationASP.Controllers
                 return NotFound();
 
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult New()
+        {
+            var membershipTypes = _context.MembershipType.ToList();
+            var viewModel = new NewXlatorViewModel { MembershipTypes = membershipTypes };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Create(Xlator Xlator)
+        {
+            _context.Xlators.Add(Xlator);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Xlators");
         }
     }
 }

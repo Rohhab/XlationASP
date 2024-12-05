@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using XlationASP.Data;
 
 namespace XlationASP.Controllers
@@ -14,7 +15,7 @@ namespace XlationASP.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var model = _context.Books.ToList();
+            var model = _context.Books.Include(b => b.Genre).ToList();
 
             return View(model);
         }
@@ -25,7 +26,7 @@ namespace XlationASP.Controllers
         {
             var effectiveId = id ?? queryId;
 
-            var model = _context.Books.SingleOrDefault(b => b.Id == id);
+            var model = _context.Books.Include(b => b.Genre).SingleOrDefault(b => b.Id == id);
 
             if (model == null)
                 return NotFound();
