@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace XlationASP.Migrations
 {
     /// <inheritdoc />
-    public partial class ChangeSchema : Migration
+    public partial class AddBookToDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,7 +27,8 @@ namespace XlationASP.Migrations
                 name: "Books",
                 columns: table => new
                 {
-                    Id = table.Column<byte>(type: "tinyint", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     PublishDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),

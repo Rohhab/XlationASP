@@ -5,7 +5,7 @@
 namespace XlationASP.Migrations
 {
     /// <inheritdoc />
-    public partial class PopulateGenres : Migration
+    public partial class PopulateGenre : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -13,7 +13,7 @@ namespace XlationASP.Migrations
             migrationBuilder.Sql("INSERT INTO Genre (Id, Name) VALUES (1, 'Novel')");
             migrationBuilder.Sql("INSERT INTO Genre (Id, Name) VALUES (2, 'History')");
             migrationBuilder.Sql("INSERT INTO Genre (Id, Name) VALUES (3, 'Biography')");
-            migrationBuilder.Sql("INSERT INTO Genre (Id, Name) VALUES (4, 'Comedy')");
+            migrationBuilder.Sql("INSERT INTO Genre (Id, Name) VALUES (4, 'Academic')");
             migrationBuilder.Sql("INSERT INTO Genre (Id, Name) VALUES (5, 'Fiction')");
         }
 

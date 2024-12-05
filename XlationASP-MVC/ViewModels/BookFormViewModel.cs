@@ -2,7 +2,7 @@
 
 namespace XlationASP.ViewModels
 {
-    public class BookDetailsViewModel
+    public class BookFormViewModel
     {
         public IEnumerable<Genre>? Genre { get; set; }
         public Book? Book { get; set; }

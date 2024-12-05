@@ -2,7 +2,7 @@
 
 namespace XlationASP.ViewModels
 {
-    public class NewXlatorViewModel
+    public class XlatorFormViewModel
     {
         public IEnumerable<MembershipType>? MembershipTypes { get; set; }
         public Xlator? Xlator { get; set; }

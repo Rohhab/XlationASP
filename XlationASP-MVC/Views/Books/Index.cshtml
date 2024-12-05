@@ -6,6 +6,14 @@
 <h1>@ViewData["Title"]</h1>
 <hr/>
 
+@Html.ActionLink(
+    linkText: "Add",
+    actionName: "New",
+    controllerName: "Books",
+    routeValues: null,
+    htmlAttributes: new { @class = "btn btn-primary" }
+)
+
 @if(Model == null || !Model.Any())
 {
     <p>No book submitted yet.</p>
@@ -17,6 +25,7 @@ else
             <tr>
                 <th>ID</th>
                 <th>Title</th>
+                <th>Genre</th>
             </tr>
         </thead>
         <tbody>
@@ -26,12 +35,13 @@ else
                         <td>@book.Id</td>
                         <td>@Html.ActionLink(
                             linkText: $"{book.Title}",
-                            actionName: "Details",
+                            actionName: "Edit",
                             controllerName: "Books",
                             routeValues: new { id = book.Id },
                             htmlAttributes: null
                         )
                         </td>
+                        <td>@book.Genre.Name</td>
                     </tr>
                 }
         </tbody>

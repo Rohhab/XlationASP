@@ -12,8 +12,8 @@ using XlationASP.Data;
 namespace XlationASP.Migrations
 {
     [DbContext(typeof(DomainDbContext))]
-    [Migration("20241205081932_PopulateGenres")]
-    partial class PopulateGenres
+    [Migration("20241205194035_AddBookToDb")]
+    partial class AddBookToDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,8 +27,11 @@ namespace XlationASP.Migrations
 
             modelBuilder.Entity("XlationASP.Models.Book", b =>
                 {
-                    b.Property<byte>("Id")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");

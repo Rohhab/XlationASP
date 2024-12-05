@@ -39,18 +39,48 @@ namespace XlationASP.Controllers
         [HttpGet]
         public IActionResult New()
         {
+            ViewData["Title"] = "New Xlator";
+
             var membershipTypes = _context.MembershipType.ToList();
-            var viewModel = new NewXlatorViewModel { MembershipTypes = membershipTypes };
-            return View(viewModel);
+
+            var viewModel = new XlatorFormViewModel { MembershipTypes = membershipTypes };
+            return View("XlatorForm", viewModel);
         }
 
         [HttpPost]
-        public IActionResult Create(Xlator Xlator)
+        public IActionResult Save(Xlator Xlator)
         {
-            _context.Xlators.Add(Xlator);
+            if (Xlator.Id == 0)
+                _context.Xlators.Add(Xlator);
+            else
+            {
+                var xlatorInDb = _context.Xlators.Single(x => x.Id == Xlator.Id);
+
+                xlatorInDb.Name = Xlator.Name;
+                xlatorInDb.Birthdate = Xlator.Birthdate;
+                xlatorInDb.IsSubscribedToNewsLetter = Xlator.IsSubscribedToNewsLetter;
+                xlatorInDb.MembershipTypeId = Xlator.MembershipTypeId;
+            }
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Xlators");
+        }
+
+        public IActionResult Edit(int id)
+        {
+            ViewData["Title"] = "Edit Xlator";
+            var xlator = _context.Xlators.SingleOrDefault(x => x.Id == id);
+
+            if (xlator == null)
+                return NotFound();
+
+            var viewModel = new XlatorFormViewModel
+            {
+                Xlator = xlator,
+                MembershipTypes = _context.MembershipType.ToList()
+            };
+
+            return View("XlatorForm", viewModel);
         }
     }
 }

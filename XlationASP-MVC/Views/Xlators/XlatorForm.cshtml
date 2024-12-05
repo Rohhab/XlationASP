@@ -1,11 +1,9 @@
-﻿@model XlationASP.ViewModels.NewXlatorViewModel
-@{
-    ViewData["Title"] = "New Xlator";
-}
+﻿@model XlationASP.ViewModels.XlatorFormViewModel
 
 <h1>@ViewData["Title"]</h1>
+<hr />
 
-@using(Html.BeginForm("Create", "Xlators"))
+@using(Html.BeginForm("Save", "Xlators"))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Xlator.Name)
@@ -14,7 +12,7 @@
 
     <div class="form-group">
         @Html.LabelFor(m => m.Xlator.Birthdate)
-        @Html.TextBoxFor(m => m.Xlator.Birthdate, new { @class = "form-control" })
+        @Html.TextBoxFor(m => m.Xlator.Birthdate, "{0:d MMM yyyy}" ,new { @class = "form-control" })
     </div>
 
     <div class="form-group">
@@ -28,6 +26,6 @@
         Is Subscribed?
         </label>
     </div>
-
+    @Html.HiddenFor(m => m.Xlator.Id)
     <button type="submit" class="btn btn-primary">Save</button>
 }
