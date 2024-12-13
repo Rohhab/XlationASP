@@ -51,6 +51,7 @@ namespace XlationASP.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Save(Book Book)
         {
             if (Book.Id == 0)

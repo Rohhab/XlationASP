@@ -48,18 +48,32 @@ namespace XlationASP.Controllers
         }
 
         [HttpPost]
-        public IActionResult Save(Xlator Xlator)
+        [ValidateAntiForgeryToken]
+        public IActionResult Save(Xlator xlator)
         {
-            if (Xlator.Id == 0)
-                _context.Xlators.Add(Xlator);
+            if (!ModelState.IsValid)
+            {
+                ViewData["Title"] = "Save Xlator";
+
+                var viewModel = new XlatorFormViewModel
+                {
+                    Xlator = xlator,
+                    MembershipTypes = _context.MembershipType.ToList()
+                };
+
+                return View("XlatorForm", viewModel);
+            }
+
+            if (xlator.Id == 0)
+                _context.Xlators.Add(xlator);
             else
             {
-                var xlatorInDb = _context.Xlators.Single(x => x.Id == Xlator.Id);
+                var xlatorInDb = _context.Xlators.Single(x => x.Id == xlator.Id);
 
-                xlatorInDb.Name = Xlator.Name;
-                xlatorInDb.Birthdate = Xlator.Birthdate;
-                xlatorInDb.IsSubscribedToNewsLetter = Xlator.IsSubscribedToNewsLetter;
-                xlatorInDb.MembershipTypeId = Xlator.MembershipTypeId;
+                xlatorInDb.Name = xlator.Name;
+                xlatorInDb.Birthdate = xlator.Birthdate;
+                xlatorInDb.IsSubscribedToNewsLetter = xlator.IsSubscribedToNewsLetter;
+                xlatorInDb.MembershipTypeId = xlator.MembershipTypeId;
             }
             _context.SaveChanges();
 

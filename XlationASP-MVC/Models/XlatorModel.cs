@@ -6,6 +6,7 @@ namespace XlationASP.Models
     {
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Please make sure to enter your name")]
         [StringLength(255)]
         public string Name { get; set; }
 
@@ -13,10 +14,13 @@ namespace XlationASP.Models
 
         public MembershipType MembershipType { get; set; }
 
+        [MembershipTypeCustomValidator]
+        [Required(ErrorMessage = "Please make sure to select membership type")]
         [Display(Name = "Membership Type")]
         public byte MembershipTypeId { get; set; }
 
         [Display(Name = "Date of Birth")]
+        [BirthdateCustomValidator]
         public DateTime? Birthdate { get; set; }
     }
 }

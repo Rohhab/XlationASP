@@ -8,22 +8,27 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Book.Title)
         @Html.TextBoxFor(m => m.Book.Title, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Book.Title)
     </div>
     
     <div class="form-group">
         @Html.LabelFor(m => m.Book.PublishDate)
         @Html.TextBoxFor(m => m.Book.PublishDate, "{0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Book.PublishDate)
     </div>
     
     <div class="form-group">
         @Html.LabelFor(m => m.Book.GenreId)
         @Html.DropDownListFor(m => m.Book.GenreId, new SelectList(Model.Genre, "Id", "Name"), "Select Genre", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Book.GenreId)
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Book.NoOfPages)
         @Html.TextBoxFor(m => m.Book.NoOfPages, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Book.NoOfPages)
     </div>
     @Html.HiddenFor(m => m.Book.Id)
+    @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary">Save</button>
 }
