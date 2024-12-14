@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using XlationASP.Dtos;
 
 namespace XlationASP.Models
 {
@@ -6,10 +7,24 @@ namespace XlationASP.Models
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var xlator = (Xlator)validationContext.ObjectInstance;
+            var objectType = validationContext.ObjectInstance.GetType();
 
-            if (xlator.MembershipTypeId == MembershipType.Unknown || xlator.MembershipTypeId == 0)
-                return new ValidationResult("Please select your membership type");
+            if (objectType == typeof(Xlator))
+            {
+                var xlator = (Xlator)validationContext.ObjectInstance;
+                if (xlator.MembershipTypeId == MembershipType.Unknown)
+                    return new ValidationResult("Please select your membership type");
+            }
+            else if (objectType == typeof(XlatorDto))
+            {
+                var xlatorDto = (XlatorDto)validationContext.ObjectInstance;
+                if (xlatorDto.MembershipTypeId == MembershipType.Unknown)
+                    return new ValidationResult("Please select your membership type");
+            }
+            else
+            {
+                return new ValidationResult("Unknown object type");
+            }
 
             return ValidationResult.Success;
         }
