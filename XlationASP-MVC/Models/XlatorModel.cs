@@ -12,7 +12,7 @@ namespace XlationASP.Models
 
         public bool IsSubscribedToNewsLetter { get; set; }
 
-        public MembershipType MembershipType { get; set; }
+        public MembershipType? MembershipType { get; set; }
 
         [MembershipTypeCustomValidator]
         [Required(ErrorMessage = "Please make sure to select membership type")]

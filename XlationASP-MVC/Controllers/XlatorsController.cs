@@ -44,6 +44,7 @@ namespace XlationASP.Controllers
             var membershipTypes = _context.MembershipType.ToList();
 
             var viewModel = new XlatorFormViewModel { MembershipTypes = membershipTypes };
+
             return View("XlatorForm", viewModel);
         }
 
@@ -65,7 +66,9 @@ namespace XlationASP.Controllers
             }
 
             if (xlator.Id == 0)
+            {
                 _context.Xlators.Add(xlator);
+            }
             else
             {
                 var xlatorInDb = _context.Xlators.Single(x => x.Id == xlator.Id);
@@ -75,6 +78,7 @@ namespace XlationASP.Controllers
                 xlatorInDb.IsSubscribedToNewsLetter = xlator.IsSubscribedToNewsLetter;
                 xlatorInDb.MembershipTypeId = xlator.MembershipTypeId;
             }
+
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Xlators");

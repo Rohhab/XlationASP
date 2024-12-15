@@ -28,7 +28,7 @@ namespace XlationASP.Controllers
         {
             var effectiveId = id ?? queryId;
 
-            var model = _context.Books.Include(b => b.Genre).SingleOrDefault(b => b.Id == id);
+            var model = _context.Books.Include(b => b.Genre).SingleOrDefault(b => b.Id == effectiveId);
 
             if (model == null)
                 return NotFound();
@@ -43,28 +43,42 @@ namespace XlationASP.Controllers
 
             var genres = _context.Genre.ToList();
 
-            var ViewModel = new BookFormViewModel
-            {
-                Genre = genres
-            };
+            var ViewModel = new BookFormViewModel { Genre = genres };
+
             return View("BookForm", ViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Save(Book Book)
+        public IActionResult Save(Book book)
         {
-            if (Book.Id == 0)
-                _context.Books.Add(Book);
+            if (!ModelState.IsValid)
+            {
+                ViewData["Title"] = "Save Book";
+
+                var viewModel = new BookFormViewModel
+                {
+                    Book = book,
+                    Genre = _context.Genre.ToList()
+                };
+
+                return View("BookForm", viewModel);
+            }
+
+            if (book.Id == 0)
+            {
+                _context.Books.Add(book);
+            }
             else
             {
-                var bookInDb = _context.Books.Single(b => b.Id == Book.Id);
+                var bookInDb = _context.Books.Single(b => b.Id == book.Id);
 
-                bookInDb.Title = Book.Title;
-                bookInDb.PublishDate = Book.PublishDate;
-                bookInDb.Genre = Book.Genre;
-                bookInDb.NoOfPages = Book.NoOfPages;
+                bookInDb.Title = book.Title;
+                bookInDb.PublishDate = book.PublishDate;
+                bookInDb.GenreId = book.GenreId;
+                bookInDb.NoOfPages = book.NoOfPages;
             }
+
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Books");
@@ -83,6 +97,7 @@ namespace XlationASP.Controllers
                 Book = book,
                 Genre = _context.Genre.ToList()
             };
+
             return View("BookForm", ViewModel);
         }
     }

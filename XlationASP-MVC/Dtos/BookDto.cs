@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace XlationASP.Models
+namespace XlationASP.Dtos
 {
-    public class Book
+    public class BookDto
     {
         public int Id { get; set; }
 
@@ -20,8 +20,6 @@ namespace XlationASP.Models
         [Required(ErrorMessage = "Please make sure to enter no. of pages")]
         [Range(5, double.MaxValue, ErrorMessage = "The book shall have at least 5 page")]
         public int NoOfPages { get; set; }
-
-        public Genre? Genre { get; set; }
 
         [Display(Name = "Genre")]
         [Required(ErrorMessage = "Please make sure to select the genre")]

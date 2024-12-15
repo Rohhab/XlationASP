@@ -23,7 +23,8 @@ namespace XlationASP.Controllers.Api
         public IActionResult GetXlators()
         {
             var xlators = _context.Xlators.ToList();
-            var xlatorsDto = _mapper.Map<IEnumerable<Xlator>>(xlators);
+            var xlatorsDto = _mapper.Map<IEnumerable<XlatorDto>>(xlators);
+
             return Ok(xlatorsDto);
         }
 
@@ -34,7 +35,7 @@ namespace XlationASP.Controllers.Api
             var xlatorInDb = _context.Xlators.Find(id);
 
             if (xlatorInDb == null)
-                return NotFound(new { message = "Xlator not found." });
+                return NotFound("Xlator not found.");
 
             var xlatorDto = _mapper.Map<XlatorDto>(xlatorInDb);
 
