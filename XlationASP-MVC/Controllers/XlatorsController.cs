@@ -41,9 +41,10 @@ namespace XlationASP.Controllers
         {
             ViewData["Title"] = "New Xlator";
 
-            var membershipTypes = _context.MembershipType.ToList();
-
-            var viewModel = new XlatorFormViewModel { MembershipTypes = membershipTypes };
+            var viewModel = new XlatorFormViewModel
+            {
+                MembershipTypes = [.. _context.MembershipType]
+            };
 
             return View("XlatorForm", viewModel);
         }
@@ -56,9 +57,8 @@ namespace XlationASP.Controllers
             {
                 ViewData["Title"] = "Save Xlator";
 
-                var viewModel = new XlatorFormViewModel
+                var viewModel = new XlatorFormViewModel(xlator)
                 {
-                    Xlator = xlator,
                     MembershipTypes = _context.MembershipType.ToList()
                 };
 
@@ -92,9 +92,8 @@ namespace XlationASP.Controllers
             if (xlator == null)
                 return NotFound();
 
-            var viewModel = new XlatorFormViewModel
+            var viewModel = new XlatorFormViewModel(xlator)
             {
-                Xlator = xlator,
                 MembershipTypes = _context.MembershipType.ToList()
             };
 

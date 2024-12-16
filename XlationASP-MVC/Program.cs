@@ -30,11 +30,12 @@ builder.Services.AddControllers()
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddRazorPages()
-    .AddMvcOptions(options =>
-    {
-        options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
-            _ => "This field is required");
-    });
+    //.AddMvcOptions(options =>
+    //{
+    //    options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
+    //        _ => "This field is required");
+    //})
+    ;
 
 var app = builder.Build();
 

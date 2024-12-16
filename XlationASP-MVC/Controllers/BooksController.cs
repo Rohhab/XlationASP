@@ -9,6 +9,7 @@ namespace XlationASP.Controllers
     public class BooksController : Controller
     {
         private readonly DomainDbContext _context;
+
         public BooksController(DomainDbContext context)
         {
             _context = context;
@@ -41,9 +42,10 @@ namespace XlationASP.Controllers
         {
             ViewData["Title"] = "New Book";
 
-            var genres = _context.Genre.ToList();
-
-            var ViewModel = new BookFormViewModel { Genre = genres };
+            var ViewModel = new BookFormViewModel
+            {
+                Genre = [.. _context.Genre]
+            };
 
             return View("BookForm", ViewModel);
         }
@@ -56,10 +58,9 @@ namespace XlationASP.Controllers
             {
                 ViewData["Title"] = "Save Book";
 
-                var viewModel = new BookFormViewModel
+                var viewModel = new BookFormViewModel(book)
                 {
-                    Book = book,
-                    Genre = _context.Genre.ToList()
+                    Genre = [.. _context.Genre]
                 };
 
                 return View("BookForm", viewModel);
@@ -67,6 +68,7 @@ namespace XlationASP.Controllers
 
             if (book.Id == 0)
             {
+                book.DateAdded = DateTime.Now;
                 _context.Books.Add(book);
             }
             else
@@ -87,15 +89,15 @@ namespace XlationASP.Controllers
         public IActionResult Edit(int id)
         {
             ViewData["Title"] = "Edit Book";
+
             var book = _context.Books.SingleOrDefault(b => b.Id == id);
 
             if (book == null)
                 return NotFound();
 
-            var ViewModel = new BookFormViewModel
+            var ViewModel = new BookFormViewModel(book)
             {
-                Book = book,
-                Genre = _context.Genre.ToList()
+                Genre = [.. _context.Genre]
             };
 
             return View("BookForm", ViewModel);

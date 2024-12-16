@@ -6,31 +6,31 @@
 @using(Html.BeginForm("Save", "Xlators"))
 {
     <div class="form-group">
-        @Html.LabelFor(m => m.Xlator.Name)
-        @Html.TextBoxFor(m => m.Xlator.Name, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Xlator.Name)
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Xlator.MembershipTypeId)
-        @Html.DropDownListFor(m => m.Xlator.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select Membership Type" ,new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Xlator.MembershipTypeId)
+        @Html.LabelFor(m => m.MembershipTypeId)
+        @Html.DropDownListFor(m => m.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select Membership Type" ,new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MembershipTypeId)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Xlator.Birthdate)
-        @Html.TextBoxFor(m => m.Xlator.Birthdate, "{0:d MMM yyyy}" ,new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Xlator.Birthdate)
+        @Html.LabelFor(m => m.Birthdate)
+        @Html.TextBoxFor(m => m.Birthdate, "{0:d MMM yyyy}" ,new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Birthdate)
     </div>
     
     <div class="form-check">
-        @Html.CheckBoxFor(m => m.Xlator.IsSubscribedToNewsLetter, new { @class = "form-check-input" } )
+        @Html.CheckBoxFor(m => m.IsSubscribedToNewsLetter, new { @class = "form-check-input" } )
         <label class="form-check-label" for="IsSubscribedToNewsLetter">
         Is Subscribed?
         </label>
     </div>
 
-    @Html.HiddenFor(m => m.Xlator.Id)
+    @Html.HiddenFor(m => m.Id)
     @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary">Save</button>
 }
