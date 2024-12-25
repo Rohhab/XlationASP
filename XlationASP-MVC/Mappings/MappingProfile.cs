@@ -9,10 +9,12 @@ namespace XlationASP.Mappings
         public MappingProfile()
         {
             CreateMap<Xlator, XlatorDto>();
+            CreateMap<MembershipType, MembershipTypeDto>();
+            CreateMap<Book, BookDto>();
+            CreateMap<Genre, GenreDto>();
+
             CreateMap<XlatorDto, Xlator>()
                 .ForMember(x => x.Id, opt => opt.Ignore());
-
-            CreateMap<Book, BookDto>();
             CreateMap<BookDto, Book>()
                 .ForMember(b => b.Id, opt => opt.Ignore());
         }

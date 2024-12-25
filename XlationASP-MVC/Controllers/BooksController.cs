@@ -18,9 +18,8 @@ namespace XlationASP.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var model = _context.Books.Include(b => b.Genre).ToList();
-
-            return View(model);
+            //var model = _context.Books.Include(b => b.Genre).ToList();
+            return View();
         }
 
         [Route("books/details/{id?}")]

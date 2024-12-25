@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using XlationASP.Data;
 using XlationASP.Dtos;
 using XlationASP.Models;
@@ -22,7 +23,7 @@ namespace XlationASP.Controllers.Api
         // GET /api/books
         public IActionResult GetBooks()
         {
-            var books = _context.Books.ToList();
+            var books = _context.Books.Include(b => b.Genre).ToList();
             var booksDto = _mapper.Map<IEnumerable<BookDto>>(books);
 
             return Ok(booksDto);

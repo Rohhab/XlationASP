@@ -13,6 +13,8 @@ namespace XlationASP.Dtos
 
         public bool IsSubscribedToNewsLetter { get; set; }
 
+        public MembershipTypeDto MembershipType { get; set; }
+
         [MembershipTypeCustomValidator]
         [Required(ErrorMessage = "Please make sure to select membership type")]
         public byte MembershipTypeId { get; set; }

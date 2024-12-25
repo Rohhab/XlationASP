@@ -17,9 +17,10 @@ namespace XlationASP.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var model = _context.Xlators.Include(x => x.MembershipType).ToList();
+            //var model = _context.Xlators.Include(x => x.MembershipType).ToList();
 
-            return View(model);
+            //return View(model);
+            return View();
         }
 
         [Route("xlators/details/{id?}")]

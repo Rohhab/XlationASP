@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using XlationASP.Data;
 using XlationASP.Dtos;
 using XlationASP.Models;
@@ -22,7 +23,7 @@ namespace XlationASP.Controllers.Api
         // GET /api/xlators
         public IActionResult GetXlators()
         {
-            var xlators = _context.Xlators.ToList();
+            var xlators = _context.Xlators.Include(x => x.MembershipType).ToList();
             var xlatorsDto = _mapper.Map<IEnumerable<XlatorDto>>(xlators);
 
             return Ok(xlatorsDto);

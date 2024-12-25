@@ -14,24 +14,23 @@
         htmlAttributes: new { @class = "btn btn-primary" }
     )
 
-@if(Model == null || !Model.Any()) 
+@*@if(Model == null || !Model.Any()) 
 { 
     <p>No Xlators joined yet.</p> 
 } 
 else 
-{ 
-    <table id="xlators" class="table table-­bordered table-hover"> 
+{*@ 
+    <table id="xlators" class="table table-­bordered table-hover align-middle"> 
         <thead> 
             <tr> 
-                <th>#</th> 
                 <th>Name</th>
-                <th>Membership Type</th>
-                <th>Delete</th>
-            </tr> 
+                <th class="text-center">Membership Type</th>
+                <th class="text-center">Delete</th>
+            </tr>
         </thead> 
 
         <tbody> 
-            @for(var i = 0; i < Model.Count(); i++)
+            @*@for(var i = 0; i < Model.Count(); i++)
             {
                 var xlator = Model.ElementAt(i);
                 <tr> 
@@ -50,7 +49,7 @@ else
                         <button data-xlator-id="@xlator.Id" class="btn btn-link js-delete" data-bs-toggle="modal" data-bs-target="#delete-modal">Delete</button>
                     </td>
                 </tr> 
-            } 
+            }*@
         </tbody> 
     </table>
 
@@ -71,7 +70,7 @@ else
             </div>
         </div>
     </div>
-}
+@*}*@
 
 @section Scripts
 {
@@ -80,17 +79,48 @@ else
 
     <script>
         $(document).ready(function() {
-            $("#xlators").DataTable({
-
+            var table = $('#xlators').DataTable({
+                ajax: {
+                    url: "/api/xlators/",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        name: "Name",
+                        title: "Name",
+                        data: "name",
+                        render: function (data, type, xlator) {
+                            return xlator.name;
+                        }
+                    },
+                    {
+                        name: "Membership Type",
+                        title: "Membership Type",
+                        data: "membershipType.name",
+                        className: "dt-body-center",
+                        render: function (data) {
+                            return data;
+                        }
+                    },
+                    {
+                        title: "Actions",
+                        name: "Actions",
+                        data: "id",
+                        className: "dt-body-center",
+                        render: function (data) {
+                            return "<button class='btn btn-outline-danger btn-sm js-delete' data-bs-toggle='modal' data-bs-target='#delete-modal' data-xlator-id='" + data + "'>Delete</button> <a class='btn btn-outline-secondary btn-sm' href='/xlators/edit/" + data + "'>Edit</a>";
+                        }
+                    }
+                ]
             });
 
             var xlatorIdToDelete;
 
-            function updateSequenceNumbers() {
-                $("#xlators tbody tr").each(function(index) {
-                    $(this).find("td:first").text(index + 1);
-                });
-            }
+            //function updateSequenceNumbers() {
+            //    $("#xlators tbody tr").each(function(index) {
+            //        $(this).find("td:first").text(index + 1);
+            //    });
+            //}
 
             // Open the modal and store the id of the xlator to delete
             $("#xlators").on("click", ".js-delete", function() {
@@ -105,9 +135,11 @@ else
                     method: "DELETE",
                     success: function() {
                         // Remove the table row
-                        $("#xlators").find("button[data-xlator-id='" + xlatorIdToDelete + "']").closest("tr").remove();
+                        table.row(
+                            $("#xlators").find("button[data-xlator-id='" + xlatorIdToDelete + "']").closest("tr")
+                            ).remove().draw();
                         // Update sequence numbers
-                        updateSequenceNumbers();
+                        //updateSequenceNumbers();
                         // Close the modal
                         $("#delete-modal").modal("hide");
                     },
