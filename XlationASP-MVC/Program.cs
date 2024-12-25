@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
@@ -29,13 +30,12 @@ builder.Services.AddControllers()
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddRazorPages()
-    //.AddMvcOptions(options =>
-    //{
-    //    options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
-    //        _ => "This field is required");
-    //})
-    ;
+builder.Services.AddRazorPages();
+
+builder.Services.AddAuthorizationBuilder()
+    .SetFallbackPolicy(new AuthorizationPolicyBuilder()
+    .RequireAuthenticatedUser()
+    .Build());
 
 var app = builder.Build();
 
