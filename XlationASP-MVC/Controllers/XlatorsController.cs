@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using XlationASP.Data;
 using XlationASP.Models;
@@ -9,6 +10,7 @@ namespace XlationASP.Controllers
     public class XlatorsController : Controller
     {
         private readonly DomainDbContext _context;
+
         public XlatorsController(DomainDbContext context)
         {
             _context = context;
@@ -17,10 +19,12 @@ namespace XlationASP.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            if (User.IsInRole(RoleName.Admin))
+                return View("List");
             //var model = _context.Xlators.Include(x => x.MembershipType).ToList();
-
             //return View(model);
-            return View();
+
+            return View("LimitedList");
         }
 
         [Route("xlators/details/{id?}")]
@@ -29,7 +33,9 @@ namespace XlationASP.Controllers
         {
             var effectiveId = id ?? queryId;
 
-            var model = _context.Xlators.Include(x => x.MembershipType).SingleOrDefault(x => x.Id == effectiveId);
+            var model = _context
+                .Xlators.Include(x => x.MembershipType)
+                .SingleOrDefault(x => x.Id == effectiveId);
 
             if (model == null)
                 return NotFound();
@@ -44,7 +50,7 @@ namespace XlationASP.Controllers
 
             var viewModel = new XlatorFormViewModel
             {
-                MembershipTypes = [.. _context.MembershipType]
+                MembershipTypes = [.. _context.MembershipType],
             };
 
             return View("XlatorForm", viewModel);
@@ -60,7 +66,7 @@ namespace XlationASP.Controllers
 
                 var viewModel = new XlatorFormViewModel(xlator)
                 {
-                    MembershipTypes = _context.MembershipType.ToList()
+                    MembershipTypes = _context.MembershipType.ToList(),
                 };
 
                 return View("XlatorForm", viewModel);
@@ -95,7 +101,7 @@ namespace XlationASP.Controllers
 
             var viewModel = new XlatorFormViewModel(xlator)
             {
-                MembershipTypes = _context.MembershipType.ToList()
+                MembershipTypes = _context.MembershipType.ToList(),
             };
 
             return View("XlatorForm", viewModel);

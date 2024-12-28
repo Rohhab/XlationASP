@@ -1,0 +1,55 @@
+﻿@model IEnumerable<XlationASP.Models.Xlator>
+
+@{
+    ViewData["Title"] = "Xlators";
+}
+<h1>@ViewData["Title"]</h1>
+<hr/>
+
+<table id="xlators" class="table table-­bordered table-hover align-middle">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th class="text-center">Membership Type</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+    </tbody> 
+</table>
+
+@section Scripts
+{
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var table = $('#xlators').DataTable({
+                ajax: {
+                    url: "/api/xlators/",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        name: "Name",
+                        title: "Name",
+                        data: "name",
+                        render: function (data, type, xlator) {
+                            return xlator.name;
+                        }
+                    },
+                    {
+                        name: "Membership Type",
+                        title: "Membership Type",
+                        data: "membershipType.name",
+                        className: "dt-body-center",
+                        render: function (data) {
+                            return data;
+                        }
+                    },
+                ]
+            });
+        });
+    </script>
+}

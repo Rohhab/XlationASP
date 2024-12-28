@@ -51,7 +51,7 @@ namespace XlationASP.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("XlationASP.Models.Genre", b =>
@@ -66,7 +66,7 @@ namespace XlationASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genre");
+                    b.ToTable("Genre", (string)null);
                 });
 
             modelBuilder.Entity("XlationASP.Models.MembershipType", b =>
@@ -89,7 +89,7 @@ namespace XlationASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MembershipType");
+                    b.ToTable("MembershipType", (string)null);
                 });
 
             modelBuilder.Entity("XlationASP.Models.Xlator", b =>
@@ -118,7 +118,7 @@ namespace XlationASP.Migrations
 
                     b.HasIndex("MembershipTypeId");
 
-                    b.ToTable("Xlators");
+                    b.ToTable("Xlators", (string)null);
                 });
 
             modelBuilder.Entity("XlationASP.Models.Book", b =>
