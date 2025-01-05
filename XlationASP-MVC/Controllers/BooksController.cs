@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using XlationASP.Data;
 using XlationASP.Models;
@@ -19,7 +20,10 @@ namespace XlationASP.Controllers
         public IActionResult Index()
         {
             //var model = _context.Books.Include(b => b.Genre).ToList();
-            return View();
+            if (User.IsInRole("Admin"))
+                return View("List");
+
+            return View("LimitedList");
         }
 
         [Route("books/details/{id?}")]
@@ -37,6 +41,7 @@ namespace XlationASP.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin, Xlator")]
         public IActionResult New()
         {
             ViewData["Title"] = "New Book";

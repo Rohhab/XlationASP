@@ -44,6 +44,7 @@ namespace XlationASP.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin, Xlator")]
         public IActionResult New()
         {
             ViewData["Title"] = "New Xlator";

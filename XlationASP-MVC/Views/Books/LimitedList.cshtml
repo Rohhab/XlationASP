@@ -1,0 +1,57 @@
+﻿@model IEnumerable<XlationASP.Models.Book>
+
+@{
+    ViewData["Title"] = "Books";
+}
+<h1>@ViewData["Title"]</h1>
+<hr />
+
+<table id="books" class="table table-­bordered table-hover align-middle">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th class="text-center">No. of Pages</th>
+            <th class="text-center">Genre</th>
+        </tr>
+    </thead>
+
+    <tbody>
+ 
+    </tbody>
+</table>
+
+@section Scripts
+{
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var table = $("#books").DataTable({
+                ajax: {
+                    url: "/api/books/",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        name: "Title",
+                        title: "Title",
+                        data: "title",
+                    },
+                    {
+                        name: "No. of Pages",
+                        title: "No. of Pages",
+                        data: "noOfPages",
+                        className: "dt-body-center"
+                    },
+                    {
+                        name: "Genre",
+                        title: "Genre",
+                        data: "genre.name",
+                        className: "dt-body-center"
+                    },
+                ]
+            });
+        });
+    </script>
+}

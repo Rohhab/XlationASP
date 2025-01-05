@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using XlationASP.Models;
+using XlationASP.ViewModels;
 
 namespace XlationASP.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -18,79 +21,36 @@ namespace XlationASP.Controllers
         // GET: RoleController
         public ActionResult Index()
         {
-            var users = _userManager.Users;
-            var roles = _roleManager.Roles;
-            Console.WriteLine($"UserManager Users: {users.ToList()} & RoleManger Roles: {roles.ToList()}");
-            return View(users);
+            var users = _userManager.Users.ToList();
+            var roles = _roleManager.Roles.ToList();
+
+            var viewModel = new List<UserFormViewModel>();
+
+            foreach (var user in users)
+            {
+                var rolesForUser = _userManager.GetRolesAsync(user).Result;
+                viewModel.Add(new UserFormViewModel
+                {
+                    User = user,
+                    Roles = rolesForUser
+                });
+            }
+
+            return View(viewModel);
         }
 
-        // GET: RoleController/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
+        // GET: RoleController/Edit/Id
+        [HttpGet]
+        [Route("role/edit/")]
+        public async Task<ActionResult> Edit()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var rolesForUser = await _userManager.GetRolesAsync(user);
 
-        //// GET: RoleController/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+            if (user == null)
+                return NotFound("User not found.");
 
-        //// POST: RoleController/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: RoleController/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: RoleController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: RoleController/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: RoleController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+            return Ok($"User with Id = {user.Id}, has an email = {user.UserName} and roles = {string.Join(", ", rolesForUser)}");
+        }
     }
 }

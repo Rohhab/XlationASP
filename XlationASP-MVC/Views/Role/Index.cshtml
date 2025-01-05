@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ApplicationUser>
+﻿@model IEnumerable<XlationASP.ViewModels.UserFormViewModel>
 
 @{
     ViewData["Title"] = "Roles";
@@ -6,9 +6,59 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<ul>
-    @foreach(var item in Model)
-            {
-                <li>@item</li>
-            }
-</ul>
+<table id="xlators" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.User.UserName</td>
+                <td>@item.User.Email</td>
+                <td>@string.Join(", ", item.Roles)</td>
+                <td>
+                    <a class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a class="btn btn-sm btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Xlator</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this Xlator?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary js-modal-delete">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+
+    <script>
+    $(document).ready(function () {
+        $("#xlators").DataTable();
+        console.log("@User.Identity.Name");
+    })
+    </script>
+}
