@@ -1,11 +1,15 @@
 ﻿@model XlationAgreement
 
-@ViewData["Title"] = "Agreement";
+@{
+    ViewData["Title"] = "Agreement";
+}
 
 <h1>@ViewData["Title"]</h1>
 
 @using (Html.BeginForm("Save", "XlationAgreements"))
 {
-@Html.LabelFor(m => m.Xlators)
-@Html.DropDownListFor(m => m.Xlators, new SelectList(Model.Xlators, "Id", "Select Xlator", new { @class = "form-control" }))
+    @*<div class="form-group">
+        @Html.LabelFor(m => m.Xlators)
+        @Html.DropDownListFor(m => m.Xlators, new SelectList(Model.Xlators, "Id", "Select Xlator", new { @class = "form-control" }))
+    </div>*@
 }
