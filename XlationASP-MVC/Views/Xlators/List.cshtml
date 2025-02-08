@@ -24,6 +24,7 @@ else
         <thead> 
             <tr> 
                 <th>Name</th>
+                <th class="text-center">Email</th>
                 <th class="text-center">Membership Type</th>
                 <th class="text-center">Delete</th>
             </tr>
@@ -91,6 +92,15 @@ else
                         data: "name",
                         render: function (data, type, xlator) {
                             return xlator.name;
+                        }
+                    },
+                    {
+                        name: "Email",
+                        title: "Email",
+                        data: "email",
+                        className: "dt-body-center",
+                        render: function (data, type, xlator) {
+                            return xlator.email;
                         }
                     },
                     {

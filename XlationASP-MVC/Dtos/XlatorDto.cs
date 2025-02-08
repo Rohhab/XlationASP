@@ -21,5 +21,9 @@ namespace XlationASP.Dtos
 
         [BirthdateCustomValidator]
         public DateTime? Birthdate { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
     }
 }

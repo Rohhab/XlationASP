@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.Xml;
 using XlationASP.Data;
 using XlationASP.Models;
 using XlationASP.ViewModels;
@@ -21,8 +22,6 @@ namespace XlationASP.Controllers
         {
             if (User.IsInRole(RoleName.Admin))
                 return View("List");
-            //var model = _context.Xlators.Include(x => x.MembershipType).ToList();
-            //return View(model);
 
             return View("LimitedList");
         }
@@ -57,6 +56,22 @@ namespace XlationASP.Controllers
             return View("XlatorForm", viewModel);
         }
 
+        public IActionResult Edit(int id)
+        {
+            ViewData["Title"] = "Edit Xlator";
+            var xlator = _context.Xlators.SingleOrDefault(x => x.Id == id);
+
+            if (xlator == null)
+                return NotFound();
+
+            var viewModel = new XlatorFormViewModel(xlator)
+            {
+                MembershipTypes = [.. _context.MembershipType],
+            };
+
+            return View("XlatorForm", viewModel);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Save(Xlator xlator)
@@ -67,7 +82,7 @@ namespace XlationASP.Controllers
 
                 var viewModel = new XlatorFormViewModel(xlator)
                 {
-                    MembershipTypes = _context.MembershipType.ToList(),
+                    MembershipTypes = [.. _context.MembershipType],
                 };
 
                 return View("XlatorForm", viewModel);
@@ -85,6 +100,7 @@ namespace XlationASP.Controllers
                 xlatorInDb.Birthdate = xlator.Birthdate;
                 xlatorInDb.IsSubscribedToNewsLetter = xlator.IsSubscribedToNewsLetter;
                 xlatorInDb.MembershipTypeId = xlator.MembershipTypeId;
+                xlatorInDb.Email = xlator.Email;
             }
 
             _context.SaveChanges();
@@ -92,20 +108,5 @@ namespace XlationASP.Controllers
             return RedirectToAction("Index", "Xlators");
         }
 
-        public IActionResult Edit(int id)
-        {
-            ViewData["Title"] = "Edit Xlator";
-            var xlator = _context.Xlators.SingleOrDefault(x => x.Id == id);
-
-            if (xlator == null)
-                return NotFound();
-
-            var viewModel = new XlatorFormViewModel(xlator)
-            {
-                MembershipTypes = _context.MembershipType.ToList(),
-            };
-
-            return View("XlatorForm", viewModel);
-        }
     }
 }

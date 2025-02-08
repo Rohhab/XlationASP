@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using XlationASP.Data;
 
@@ -11,9 +12,11 @@ using XlationASP.Data;
 namespace XlationASP.Migrations
 {
     [DbContext(typeof(DomainDbContext))]
-    partial class DomainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250125140328_AddEmailToXlator")]
+    partial class AddEmailToXlator
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +59,7 @@ namespace XlationASP.Migrations
 
                     b.HasIndex("XlationAgreementId");
 
-                    b.ToTable("Books", (string)null);
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("XlationASP.Models.Genre", b =>
@@ -71,7 +74,7 @@ namespace XlationASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genre", (string)null);
+                    b.ToTable("Genre");
                 });
 
             modelBuilder.Entity("XlationASP.Models.MembershipType", b =>
@@ -94,7 +97,7 @@ namespace XlationASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MembershipType", (string)null);
+                    b.ToTable("MembershipType");
                 });
 
             modelBuilder.Entity("XlationASP.Models.XlationAgreement", b =>
@@ -113,7 +116,7 @@ namespace XlationASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("XlationAgreement", (string)null);
+                    b.ToTable("XlationAgreement");
                 });
 
             modelBuilder.Entity("XlationASP.Models.Xlator", b =>
@@ -151,7 +154,7 @@ namespace XlationASP.Migrations
 
                     b.HasIndex("XlationAgreementId");
 
-                    b.ToTable("Xlators", (string)null);
+                    b.ToTable("Xlators");
                 });
 
             modelBuilder.Entity("XlationASP.Models.Book", b =>

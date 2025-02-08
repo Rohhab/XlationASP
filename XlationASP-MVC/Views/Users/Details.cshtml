@@ -1,0 +1,27 @@
+﻿@model XlationASP.ViewModels.UserFormViewModel;
+
+@{
+    ViewData["Title"] = "User Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@using(Html.BeginForm("Index", "Users"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.User.UserName)
+        @Html.TextBoxFor(m => m.User.UserName, new { @class = "form-control"})
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.User.Email)
+        @Html.TextBoxFor(m => m.User.Email)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.Roles)
+        @Html.DropDownListFor(m => m.Roles, new SelectList(Model.Roles, "Roles"), "Select the roles", new { @class = "form-control"})
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+}

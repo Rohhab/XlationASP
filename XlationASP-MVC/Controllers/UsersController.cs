@@ -7,19 +7,20 @@ using XlationASP.ViewModels;
 namespace XlationASP.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class RoleController : Controller
+    public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RoleController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UsersController(UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
         }
 
-        // GET: RoleController
-        public ActionResult Index()
+        // GET: UsersController
+        public IActionResult Index()
         {
             var users = _userManager.Users.ToList();
             var roles = _roleManager.Roles.ToList();
@@ -39,18 +40,28 @@ namespace XlationASP.Controllers
             return View(viewModel);
         }
 
-        // GET: RoleController/Edit/Id
+        // GET: UsersController/Edit/Id
         [HttpGet]
-        [Route("role/edit/")]
-        public async Task<ActionResult> Edit()
+        [Route("users/details/{id?}")]
+        public async Task<IActionResult> Details(string? id, string? queryId)
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var effectiveId = id ?? queryId;
+
+            var user = await _userManager.FindByIdAsync(effectiveId);
             var rolesForUser = await _userManager.GetRolesAsync(user);
+
+            var viewModel = new UserFormViewModel
+            {
+                User = user,
+                Roles = rolesForUser
+            };
 
             if (user == null)
                 return NotFound("User not found.");
 
-            return Ok($"User with Id = {user.Id}, has an email = {user.UserName} and roles = {string.Join(", ", rolesForUser)}");
+            return View(viewModel);
+
+            //return Ok($"User with Id = {user.Id}, has an email = {user.UserName} and roles = {string.Join(", ", rolesForUser)}");
         }
     }
 }

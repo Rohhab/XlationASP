@@ -5,7 +5,6 @@ using System.Text.Json;
 using XlationASP.Data;
 using XlationASP.Models;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

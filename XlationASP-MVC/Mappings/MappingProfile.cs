@@ -17,6 +17,8 @@ namespace XlationASP.Mappings
                 .ForMember(x => x.Id, opt => opt.Ignore());
             CreateMap<BookDto, Book>()
                 .ForMember(b => b.Id, opt => opt.Ignore());
+
+            CreateMap<ApplicationUser, UserRolesDto>();
         }
     }
 }

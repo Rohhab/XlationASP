@@ -25,6 +25,10 @@ namespace XlationASP.ViewModels
         [BirthdateCustomValidator]
         public DateTime? Birthdate { get; set; }
 
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
         public XlatorFormViewModel()
         {
             Id = 0;
@@ -34,6 +38,7 @@ namespace XlationASP.ViewModels
         {
             Id = xlator.Id;
             Name = xlator.Name;
+            Email = xlator.Email;
             IsSubscribedToNewsLetter = xlator.IsSubscribedToNewsLetter;
             MembershipTypeId = xlator.MembershipTypeId;
             Birthdate = xlator.Birthdate;

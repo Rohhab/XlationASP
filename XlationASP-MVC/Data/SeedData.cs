@@ -1,47 +1,4 @@
-﻿//using Microsoft.AspNetCore.Identity;
-//using XlationASP.Models;
-
-//namespace XlationASP.Data
-//{
-//    public class SeedData
-//    {
-//        public static async Task Initialize(IServiceProvider serviceProvider, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
-//        {
-//            string[] roleNames = RoleName.Roles;
-//            IdentityResult roleResult;
-
-//            foreach (var roleName in roleNames)
-//            {
-//                var roleExist = await roleManager.RoleExistsAsync(roleName);
-//                if (!roleExist)
-//                {
-//                    roleResult = await roleManager.CreateAsync(new IdentityRole(roleName));
-//                }
-//            }
-
-//            var adminUser = new ApplicationUser
-//            {
-//                UserName = "xlationAdmin",
-//                Email = "admin@xlation.com",
-//                EmailConfirmed = true
-//            };
-
-//            var testUserPw = "Xlation@202412";
-
-//            var user = await userManager.FindByEmailAsync(adminUser.Email);
-
-//            if (user == null)
-//            {
-//                var createAdminUser = await userManager.CreateAsync(adminUser, testUserPw);
-//                if (createAdminUser.Succeeded)
-//                {
-//                    await userManager.AddToRoleAsync(adminUser, RoleName.Admin);
-//                }
-//            }
-//        }
-//    }
-//}
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using XlationASP.Models;
 

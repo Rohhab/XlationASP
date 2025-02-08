@@ -1,4 +1,5 @@
-﻿using XlationASP.Models;
+﻿using Microsoft.AspNetCore.Identity;
+using XlationASP.Models;
 
 namespace XlationASP.ViewModels
 {

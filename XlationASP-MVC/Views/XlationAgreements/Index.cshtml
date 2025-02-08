@@ -8,8 +8,14 @@
 
 @using (Html.BeginForm("Save", "XlationAgreements"))
 {
-    @*<div class="form-group">
-        @Html.LabelFor(m => m.Xlators)
-        @Html.DropDownListFor(m => m.Xlators, new SelectList(Model.Xlators, "Id", "Select Xlator", new { @class = "form-control" }))
-    </div>*@
+    <div>
+        @foreach(var item in Model.Xlators)
+                {
+                    <li>@item.Name</li>
+                }
+    </div>
+    <div class="form-group">
+        @*@Html.LabelFor(m => m.Xlators)*@
+        @*@Html.DropDownListFor(m => m.Xlators, new SelectList(Model.Xlators, "Id", "Select Xlator", new { @class = "form-control" }))*@
+    </div>
 }

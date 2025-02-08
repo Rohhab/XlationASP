@@ -8,7 +8,7 @@ namespace XlationASP.Models
 
         [Required(ErrorMessage = "Please make sure to enter your name")]
         [StringLength(255)]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         public bool IsSubscribedToNewsLetter { get; set; }
 
@@ -22,5 +22,10 @@ namespace XlationASP.Models
         [Display(Name = "Date of Birth")]
         [BirthdateCustomValidator]
         public DateTime? Birthdate { get; set; }
+
+        [Required(ErrorMessage = "Please enter your Email")]
+        public string Email { get; set; } = null!;
+
+        //public string? IdentityUserId { get; set; } = null!;
     }
 }
