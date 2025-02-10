@@ -48,20 +48,24 @@ namespace XlationASP.Controllers
             var effectiveId = id ?? queryId;
 
             var user = await _userManager.FindByIdAsync(effectiveId);
-            var rolesForUser = await _userManager.GetRolesAsync(user);
-
-            var viewModel = new UserFormViewModel
-            {
-                User = user,
-                Roles = rolesForUser
-            };
+            var roles = _roleManager.Roles.ToList();
+            List<String> modelRoles = [];
 
             if (user == null)
                 return NotFound("User not found.");
 
-            return View(viewModel);
+            foreach(var role in roles)
+            {
+                modelRoles.Add(role.Name);
+            }
 
-            //return Ok($"User with Id = {user.Id}, has an email = {user.UserName} and roles = {string.Join(", ", rolesForUser)}");
+            var viewModel = new UserFormViewModel
+            {
+                User = user,
+                Roles = modelRoles
+            };
+
+            return View(viewModel);
         }
     }
 }

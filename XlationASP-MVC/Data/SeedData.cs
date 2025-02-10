@@ -36,7 +36,8 @@ namespace XlationASP.Data
                 user = new ApplicationUser
                 {
                     UserName = UserName,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    MembershipTypeId = 1
                 };
                 await userManager.CreateAsync(user, testUserPw);
             }

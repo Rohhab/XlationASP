@@ -10,6 +10,8 @@ namespace XlationASP.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-    }
+        }
+        
+        public DbSet<MembershipType> MembershipTypes { get; set; } = null!;
     }
 }
