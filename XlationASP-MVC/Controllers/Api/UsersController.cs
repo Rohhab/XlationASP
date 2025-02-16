@@ -27,7 +27,7 @@ namespace XlationASP.Controllers.Api
         }
 
         // GET /api/users
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult GetUsers()
         {

@@ -14,5 +14,11 @@ namespace XlationASP.Models
         [Required(ErrorMessage = "Please make sure to select membership type")]
         [Display(Name = "Membership Type")]
         public byte MembershipTypeId { get; set; }
+
+        [Display(Name = "Date of Birth")]
+        [BirthdateCustomValidator]
+        public DateTime? Birthdate { get; set; }
+
+        public bool IsSubscribedToNewsLetter { get; set; }
     }
 }

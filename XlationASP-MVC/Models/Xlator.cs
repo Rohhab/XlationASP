@@ -25,7 +25,5 @@ namespace XlationASP.Models
 
         [Required(ErrorMessage = "Please enter your Email")]
         public string Email { get; set; } = null!;
-
-        //public string? IdentityUserId { get; set; } = null!;
     }
 }

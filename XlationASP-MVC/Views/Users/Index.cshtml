@@ -1,18 +1,15 @@
 ﻿@model IEnumerable<XlationASP.ViewModels.UserFormViewModel>
 
-@{
-    ViewData["Title"] = "User Management Console";
-}
-
 <h1>@ViewData["Title"]</h1>
+<hr/>
 
-<table id="xlators" class="table table-bordered table-hover">
+<table id="users" class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>Username</th>
-            <th>Email</th>
-            <th>Role(s)</th>
-            <th>Actions</th>
+            <th class="text-center">Email</th>
+            <th class ="text-center">Role(s)</th>
+            <th class="text-center">Actions</th>
         </tr>
     </thead>
 
@@ -57,7 +54,7 @@
 
     <script>
     $(document).ready(function () {
-        $("#xlators").DataTable({
+        $("#users").DataTable({
             ajax: {
                 url: "/api/users/",
                 dataSrc: ""
@@ -66,17 +63,19 @@
                 {
                     name: "User Name",
                     title: "User Name",
-                    data: "user.userName"
+                    data: "user.userName",
                 },
                 {
                     name: "Email",
                     title: "Email",
-                    data: "user.email"
+                    data: "user.email",
+                    className: "dt-body-center"
                 },
                 {
                     name: "Roles",
                     title: "Roles",
                     data: "roles",
+                    className: "dt-body-center",
                     render: function (data) {
                         return data;
                     }
@@ -85,6 +84,7 @@
                     name: "Actions",
                     title: "Actions",
                     data: "user.id",
+                    className: "dt-body-center",
                     render: function (data) {
                         return "<button class='btn btn-outline-danger btn-sm js-delete' data-bs-toggle='modal' data-bs-target='#delete-modal' data-user-id='" + data + "'>Delete</button> <a class='btn btn-outline-secondary btn-sm' href='/users/details/" + data + "'>Edit</a>"
                     }
