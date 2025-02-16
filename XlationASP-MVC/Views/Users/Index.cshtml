@@ -63,12 +63,12 @@
                 {
                     name: "User Name",
                     title: "User Name",
-                    data: "user.userName",
+                    data: "userName",
                 },
                 {
                     name: "Email",
                     title: "Email",
-                    data: "user.email",
+                    data: "email",
                     className: "dt-body-center"
                 },
                 {
@@ -83,7 +83,7 @@
                 {
                     name: "Actions",
                     title: "Actions",
-                    data: "user.id",
+                    data: "id",
                     className: "dt-body-center",
                     render: function (data) {
                         return "<button class='btn btn-outline-danger btn-sm js-delete' data-bs-toggle='modal' data-bs-target='#delete-modal' data-user-id='" + data + "'>Delete</button> <a class='btn btn-outline-secondary btn-sm' href='/users/details/" + data + "'>Edit</a>"

@@ -53,7 +53,7 @@ using (var scope = app.Services.CreateScope())
     var context = services.GetRequiredService<ApplicationDbContext>();
     context.Database.Migrate();
 
-    // Temporarily hardcode the password for testing purposes
+    // Getting the password from the secret manager
     var testUserPw = builder.Configuration.GetValue<string>("SeedUserPW");
 
     await SeedData.Initialize(services, testUserPw);
